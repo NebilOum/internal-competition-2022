@@ -71,8 +71,8 @@ function createArrow(direction, parentDivId, size = 10, imgFileName = "") {
     //arrowImg.onclick = sendToBot(direction);
     //Append arrow element to parent div with appendElToParentDiv()
     //If this process fails, then the specified parent div does not exist
-    if(appendElToParentDiv(parentDivId, arrowImg) != 0)
-        throw Error(`Parent div ${parentDivId} does not exist`);
+    // if(appendElToParentDiv(parentDivId, arrowImg) != 0)
+    //     throw Error(`Parent div ${parentDivId} does not exist`);
     //Return the arrow element
     return arrowImg;
 }
@@ -188,7 +188,7 @@ function createJoyStick(properties, dataHandler) {
         and is used to define the bounds of the joystick's range of motion
         2) A stick, which is the element a user drags
     */
-    //Add styling for the joystick
+    //Add styling for the joystick base
     const base = document.createElement(`div`);
     base.style.height = base.style.width = baseSize;
     base.style.backgroundColor = baseColor ? baseColor : `#03A9F4`; // default light blue
@@ -196,6 +196,7 @@ function createJoyStick(properties, dataHandler) {
     base.style.justifyContent = base.style.alignItems = `center`;
     base.style.borderRadius = `60px`;
 
+    ///styling for joystick
     const stick = document.createElement(`div`);
     stick.draggable = true;
     stick.style.height = stick.style.width = stickSize;

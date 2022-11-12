@@ -32,19 +32,17 @@ body {
     height: 100vh;
 }
 
-#movement-controls {
-    height: 40%;
-}
 
 /* prefix any ID with a # to style it in CSS */
 #joystick-1 {
-    position: absolute; /* absolute means it has a fixed position within its parent div */
-    left: 50%; /* we can adjust this position by using CSS properties such as left, top, bottom and right */
+    margin: 0 50px;
+    position: relative; /*absolute means it has a fixed position within its parent div
+    /* left: 50%; we can adjust this position by using CSS properties such as left, top, bottom and right */
 }
 
 #evenly-spaced-buttons {
     display: flex;
-    flex-direction: row; /* could also be set to column to make sets of elements vertical */
+    flex-direction: column; /* could also be set to column to make sets of elements vertical */
     align-items: center;
     justify-content: space-evenly;
 }
@@ -56,8 +54,38 @@ body {
 */
 .evenly-spaced-button {
     border: none;
-    background-color: black;
+    background-color: darkred;
     color: white; /* set the text color to white */
-    padding: 10px;
+    padding: 12px;
     border-radius: 10px;
+    margin : 10px
+}
+.main{
+    display: flex;
+    flex-direction: row; /* could also be set to column to make sets of elements vertical */
+    align-items: center;
+    justify-content: center;
+}
+#vidFrame{
+    width: 640px;
+    padding: 10px;
+    border: 10px solid red;
+    margin: 0;
+}
+#vidFrame{
+    position: relative;
+    height: 480px;
+    width: 680px;
+    border: 8px solid red;
+    overflow: hidden;
+  }
+  #bot-stream{
+    position: relative;
+    top:-1px;
+    left:-1px;
+    height: 480px;
+    width: 854px;
+  }
+h1{
+    text-align: center;
 }
