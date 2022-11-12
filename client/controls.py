@@ -3,59 +3,58 @@ import json
 import RPi.GPIO as GPIO
 from time import sleep
 
-# set the pin configuration mode to BCM
 GPIO.setmode(GPIO.BCM)
 
-#left motors
-rM_inPin1 = 6
-rM_inPin2 = 26
-rM_enable = 19
+#left side motor
+m1_input1 = 16
+m1_input2 = 20
+m1_enable = 19
 
-GPIO.setup(rM_inPin1, GPIO.OUT)
-GPIO.setup(rM_inPin2, GPIO.OUT)
-GPIO.setup(rM_enable, GPIO.OUT)
-pwmRM = GPIO.PWM(rM_enable, 1000)
-pwmRM.start(0)
+GPIO.setup(m1_input1, GPIO.OUT)
+GPIO.setup(m1_input2, GPIO.OUT)
+GPIO.setup(m1_enable, GPIO.OUT)
 
-#right motors
-lM_inPin1 = 16
-lM_inPin2 = 20
-lM_enable = 13
+m1_pwm = GPIO.PWM(m1_enable, 1000)
+m1_pwm.start(0)
 
-GPIO.setup(lM_inPin1, GPIO.OUT)
-GPIO.setup(lM_inPin2, GPIO.OUT)
-GPIO.setup(lM_enable, GPIO.OUT)
-pwmLM = GPIO.PWM(lM_enable, 1000)
-pwmLM.start(0)
+#right side motor
+m2_input1 = 6
+m2_input2 = 26
+m2_enable = 13
 
-#intake motor
-iM_inPin1 = 14
-iM_inPin2 = 15
-iM_enable = 18
-GPIO.setup(iM_inPin1, GPIO.OUT)
-GPIO.setup(iM_inPin2, GPIO.OUT)
-GPIO.setup(iM_enable, GPIO.OUT)
-GPIO.output(iM_enable, GPIO.LOW)
+GPIO.setup(m2_input1, GPIO.OUT)
+GPIO.setup(m2_input2, GPIO.OUT)
+GPIO.setup(m2_enable, GPIO.OUT)
 
- #servo to clear intake
-s1_enable = 12 #servo 1
-GPIO.setup(s1_enable, GPIO.OUT)
-pwmS1 = GPIO.PWM(s1_enable, 50)
-pwmS1.start(0)
+m2_pwm = GPIO.PWM(m2_enable, 1000)
+m2_pwm.start(0)
 
+#sucker motor
+sucker_input1 = 14
+sucker_input2 = 15
+sucker_enable = 18
+
+GPIO.setup(sucker_input1, GPIO.OUT)
+GPIO.setup(sucker_input2, GPIO.OUT)
+GPIO.setup(sucker_enable, GPIO.OUT)
+
+sucker_pwm = GPIO.PWM(sucker_enable, 1000)
+sucker_pwm.start(0)
+
+#main
 def intakeControl(spinIn):
-    if spinIn =="spinInward" :
-        GPIO.output(iM_inPin1, GPIO.HIGH)
-        GPIO.output(iM_inPin2, GPIO.LOW)
-        GPIO.output(iM_enable, GPIO.HIGH) #spin to intake
-    if spinIn =="spinOutward":
-        GPIO.output(iM_inPin1, GPIO.LOW)
-        GPIO.output(iM_inPin2, GPIO.HIGH)
-        GPIO.output(iM_enable, GPIO.HIGH)#spin to output
+    if spinIn == "spinInward" :
+        GPIO.output(sucker_input1, GPIO.HIGH)
+        GPIO.output(sucker_input2, GPIO.LOW)
+        sucker_pwm.ChangeDutyCycle(100) #spin to intake
+    if spinIn == "spinOutward":
+        GPIO.output(sucker_input1, GPIO.LOW)
+        GPIO.output(sucker_input2, GPIO.HIGH)
+        sucker_pwm.ChangeDutyCycle(100) #spin to output
     if (spinIn == "noSpin"):
-        GPIO.output(iM_inPin1, GPIO.LOW)
-        GPIO.output(iM_inPin2, GPIO.LOW)
-        GPIO.output(iM_enable, GPIO.LOW) #intake does not spin
+        GPIO.output(sucker_input1, GPIO.LOW)
+        GPIO.output(sucker_input2, GPIO.LOW)
+        sucker_pwm.ChangeDutyCycle(0) #intake does not spin
 
 def tankDrive(xSpeed,ySpeed,direction):
     # GPIO.output(rM_inPin1, GPIO.LOW)
